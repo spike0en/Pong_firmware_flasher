@@ -27,11 +27,12 @@ ps | grep zygote | grep -v grep >/dev/null && BOOTMODE=true || BOOTMODE=false
 $BOOTMODE || ps -A 2>/dev/null | grep zygote | grep -v grep >/dev/null && BOOTMODE=true
 $BOOTMODE && abort "You need to flash this Firmware from recovery!"
 
-ui_print "*******************************************"
-ui_print "* Oneplus 8t EU KB2003 Firmware Flasher   *"
-ui_print "*                                         *"
-ui_print "*        v1.3 by Wishmasterflo            *"
-ui_print "*******************************************"
+ui_print "****************************************"
+ui_print "*  Nothing Phone (2) Firmware Flasher  *"
+ui_print "*     Build: <NothingOS Build No.>     *"
+ui_print "*    Script v1.0 by Wishmasterflo      *"
+ui_print "*        Adapted by spike0en           *"
+ui_print "****************************************"
 
 set -x
 rm -rf $tmp
@@ -73,15 +74,14 @@ else  ui_print "- Could not detect RAM type. Flashing aborted!"
 fi
 
 ui_print " "
-ui_print "****************************"
-ui_print "Device: Oneplus 8t"
-ui_print "Region: EU"
-ui_print "Firmware flash: OOS13 F15"
-ui_print "****************************"
+ui_print "**********************************************"
+ui_print "Device: Nothing Phone 2 (Pong)"
+ui_print "Firmware flash: <NothingOS Build No.>"
+ui_print "**********************************************"
 ui_print " "
 ui_print "Continue? Vol+ yes, Vol- no"
 chooseport && flash=true|| exit 0
-ui_print "Flashing OOS13 F15 Firmware to both slots A and B..."
+ui_print "Flashing <Android Version> <NothingOS Build Number> Firmware to both slots A and B..."
 ui_print " "
 modem=false
 ui_print "Do you want to update Modem.img? Vol+ yes, Vol- no"
