@@ -54,25 +54,6 @@ for i in 19805 20809; do
 done
 $supported || abort "- Unsupported device! Aborting!"
 
-ddr4=false
-ddr5=false
-ui_print "Checking RAM type..."
-if [ "$(cat /proc/devinfo/ddr_type | grep -i DDR4)" ]; then
-  ddr4=true
-  ui_print "- DDR4 RAM detected!"
-elif [ "$(cat /proc/devinfo/ddr_type | grep -i DDR5)" ]; then
-  ddr5=true
-  ui_print "- DDR5 RAM detected!"
-elif [ "$(getprop ro.boot.ddr_type | grep -i 0)" ]; then
-  ddr4=true
-  ui_print "- DDR4 RAM detected!"
-elif [ "$(getprop ro.boot.ddr_type | grep -i 1)" ]; then
-  ddr5=true
-  ui_print "- DDR5 RAM detected!"
-else  ui_print "- Could not detect RAM type. Flashing aborted!" 
-  exit 0
-fi
-
 ui_print " "
 ui_print "**********************************************"
 ui_print "Device: Nothing Phone 2 (Pong)"
@@ -92,75 +73,74 @@ if [ "$modem" = "true" ]; then
 #dd if=/dev/tmp/firmware-update/modem.img of=/dev/block/bootdevice/by-name/modem_b bs=4k
 fi
 ui_print "Updating abl..."
-#dd if=/dev/tmp/firmware-update/abl.img of=/dev/block/bootdevice/by-name/abl_a bs=4k
-#dd if=/dev/tmp/firmware-update/abl.img of=/dev/block/bootdevice/by-name/abl_b bs=4k
+dd if=/dev/tmp/firmware-update/abl.img of=/dev/block/bootdevice/by-name/abl_a bs=4k
+dd if=/dev/tmp/firmware-update/abl.img of=/dev/block/bootdevice/by-name/abl_b bs=4k
 ui_print "Updating aop..."
-#dd if=/dev/tmp/firmware-update/aop.img of=/dev/block/bootdevice/by-name/aop_a bs=4k
-#dd if=/dev/tmp/firmware-update/aop.img of=/dev/block/bootdevice/by-name/aop_b bs=4k
+dd if=/dev/tmp/firmware-update/aop.img of=/dev/block/bootdevice/by-name/aop_a bs=4k
+dd if=/dev/tmp/firmware-update/aop.img of=/dev/block/bootdevice/by-name/aop_b bs=4k
+ui_print "Updating aop_config..."
+dd if=/dev/tmp/firmware-update/aop_config.img of=/dev/block/bootdevice/by-name/aop_config_a bs=4k
+dd if=/dev/tmp/firmware-update/aop_config.img of=/dev/block/bootdevice/by-name/aop_config_b bs=4k
 ui_print "Updating bluetooth..."
-#dd if=/dev/tmp/firmware-update/bluetooth.img of=/dev/block/bootdevice/by-name/bluetooth_a bs=4k
-#dd if=/dev/tmp/firmware-update/bluetooth.img of=/dev/block/bootdevice/by-name/bluetooth_b bs=4k
-ui_print "Updating cmnlib..."
-#dd if=/dev/tmp/firmware-update/cmnlib.img of=/dev/block/bootdevice/by-name/cmnlib_a bs=4k
-#dd if=/dev/tmp/firmware-update/cmnlib.img of=/dev/block/bootdevice/by-name/cmnlib_b bs=4k
-ui_print "Updating cmnlib64..."
-#dd if=/dev/tmp/firmware-update/cmnlib64.img of=/dev/block/bootdevice/by-name/cmnlib64_a bs=4k
-#dd if=/dev/tmp/firmware-update/cmnlib64.img of=/dev/block/bootdevice/by-name/cmnlib64_b bs=4k
+dd if=/dev/tmp/firmware-update/bluetooth.img of=/dev/block/bootdevice/by-name/bluetooth_a bs=4k
+dd if=/dev/tmp/firmware-update/bluetooth.img of=/dev/block/bootdevice/by-name/bluetooth_b bs=4k
+ui_print "Updating cpucp..."
+dd if=/dev/tmp/firmware-update/cpucp.img of=/dev/block/bootdevice/by-name/cpucp_a bs=4k
+dd if=/dev/tmp/firmware-update/cpucp.img of=/dev/block/bootdevice/by-name/cpucp_b bs=4k
 ui_print "Updating devcfg..."
-#dd if=/dev/tmp/firmware-update/devcfg.img of=/dev/block/bootdevice/by-name/devcfg_a bs=4k
-#dd if=/dev/tmp/firmware-update/devcfg.img of=/dev/block/bootdevice/by-name/devcfg_b bs=4k
+dd if=/dev/tmp/firmware-update/devcfg.img of=/dev/block/bootdevice/by-name/devcfg_a bs=4k
+dd if=/dev/tmp/firmware-update/devcfg.img of=/dev/block/bootdevice/by-name/devcfg_b bs=4k
 ui_print "Updating dsp..."
-#dd if=/dev/tmp/firmware-update/dsp.img of=/dev/block/bootdevice/by-name/dsp_a bs=4k
-#dd if=/dev/tmp/firmware-update/dsp.img of=/dev/block/bootdevice/by-name/dsp_b bs=4k
+dd if=/dev/tmp/firmware-update/dsp.img of=/dev/block/bootdevice/by-name/dsp_a bs=4k
+dd if=/dev/tmp/firmware-update/dsp.img of=/dev/block/bootdevice/by-name/dsp_b bs=4k
 ui_print "Updating featenabler..."
-#dd if=/dev/tmp/firmware-update/featenabler.img of=/dev/block/bootdevice/by-name/featenabler_a bs=4k
-#dd if=/dev/tmp/firmware-update/featenabler.img of=/dev/block/bootdevice/by-name/featenabler_b bs=4k
+dd if=/dev/tmp/firmware-update/featenabler.img of=/dev/block/bootdevice/by-name/featenabler_a bs=4k
+dd if=/dev/tmp/firmware-update/featenabler.img of=/dev/block/bootdevice/by-name/featenabler_b bs=4k
 ui_print "Updating hyp..."
-#dd if=/dev/tmp/firmware-update/hyp.img of=/dev/block/bootdevice/by-name/hyp_a bs=4k
-#dd if=/dev/tmp/firmware-update/hyp.img of=/dev/block/bootdevice/by-name/hyp_b bs=4k
+dd if=/dev/tmp/firmware-update/hyp.img of=/dev/block/bootdevice/by-name/hyp_a bs=4k
+dd if=/dev/tmp/firmware-update/hyp.img of=/dev/block/bootdevice/by-name/hyp_b bs=4k
 ui_print "Updating imagefv..."
-#dd if=/dev/tmp/firmware-update/imagefv.img of=/dev/block/bootdevice/by-name/imagefv_a bs=4k
-#dd if=/dev/tmp/firmware-update/imagefv.img of=/dev/block/bootdevice/by-name/imagefv_b bs=4k
+dd if=/dev/tmp/firmware-update/imagefv.img of=/dev/block/bootdevice/by-name/imagefv_a bs=4k
+dd if=/dev/tmp/firmware-update/imagefv.img of=/dev/block/bootdevice/by-name/imagefv_b bs=4k
 ui_print "Updating keymaster..."
-#dd if=/dev/tmp/firmware-update/keymaster.img of=/dev/block/bootdevice/by-name/keymaster_a bs=4k
-#dd if=/dev/tmp/firmware-update/keymaster.img of=/dev/block/bootdevice/by-name/keymaster_b bs=4k
-ui_print "Updating logo..."
-#dd if=/dev/tmp/firmware-update/logo.img of=/dev/block/bootdevice/by-name/logo_a bs=4k
-#dd if=/dev/tmp/firmware-update/logo.img of=/dev/block/bootdevice/by-name/logo_b bs=4k
-ui_print "Updating mdm_oem_stanvbk..."
-#dd if=/dev/tmp/firmware-update/mdm_oem_stanvbk.img of=/dev/block/bootdevice/by-name/mdm_oem_stanvbk bs=4k
+dd if=/dev/tmp/firmware-update/keymaster.img of=/dev/block/bootdevice/by-name/keymaster_a bs=4k
+dd if=/dev/tmp/firmware-update/keymaster.img of=/dev/block/bootdevice/by-name/keymaster_b bs=4k
+ui_print "Updating modem..."
+dd if=/dev/tmp/firmware-update/modem.img of=/dev/block/bootdevice/by-name/modem_a bs=4k
+dd if=/dev/tmp/firmware-update/modem.img of=/dev/block/bootdevice/by-name/modem_b bs=4k
 ui_print "Updating multiimgoem..."
-#dd if=/dev/tmp/firmware-update/multiimgoem.img of=/dev/block/bootdevice/by-name/multiimgoem_a bs=4k
-#dd if=/dev/tmp/firmware-update/multiimgoem.img of=/dev/block/bootdevice/by-name/multiimgoem_b bs=4k
+dd if=/dev/tmp/firmware-update/multiimgoem.img of=/dev/block/bootdevice/by-name/mumtiimgoem_a bs=4k
+dd if=/dev/tmp/firmware-update/multiimgoem.img of=/dev/block/bootdevice/by-name/mumtiimgoem_b bs=4k
+ui_print "Updating multiimgqti..."
+dd if=/dev/tmp/firmware-update/multiimgqti.img of=/dev/block/bootdevice/by-name/multiimgqti_a bs=4k
+dd if=/dev/tmp/firmware-update/multiimgqti.img of=/dev/block/bootdevice/by-name/multiimgqti_b bs=4k
 ui_print "Updating qupfw..."
-#dd if=/dev/tmp/firmware-update/qupfw.img of=/dev/block/bootdevice/by-name/qupfw_a bs=4k
-#dd if=/dev/tmp/firmware-update/qupfw.img of=/dev/block/bootdevice/by-name/qupfw_b bs=4k
-ui_print "Updating spunvm..."
-#dd if=/dev/tmp/firmware-update/spunvm.img of=/dev/block/bootdevice/by-name/spunvm bs=4k
-ui_print "Updating storsec..."
-#dd if=/dev/tmp/firmware-update/storsec.img of=/dev/block/bootdevice/by-name/storsec_a bs=4k 
-#dd if=/dev/tmp/firmware-update/storsec.img of=/dev/block/bootdevice/by-name/storsec_b bs=4k
+dd if=/dev/tmp/firmware-update/qupfw.img of=/dev/block/bootdevice/by-name/qupfw_a bs=4k
+dd if=/dev/tmp/firmware-update/qupfw.img of=/dev/block/bootdevice/by-name/qupfw_b bs=4k
+ui_print "Updating qweslicstore..."
+dd if=/dev/tmp/firmware-update/qweslicstore.img of=/dev/block/bootdevice/by-name/qweslicstore_a bs=4k
+dd if=/dev/tmp/firmware-update/qweslicstore.img of=/dev/block/bootdevice/by-name/qweslicstore_b bs=4k
+ui_print "Updating shrm..."
+dd if=/dev/tmp/firmware-update/shrm.img of=/dev/block/bootdevice/by-name/shrm_a bs=4k
+dd if=/dev/tmp/firmware-update/shrm.img of=/dev/block/bootdevice/by-name/shrm_b bs=4k
 ui_print "Updating tz..."
-#dd if=/dev/tmp/firmware-update/tz.img of=/dev/block/bootdevice/by-name/tz_a bs=4k
-#dd if=/dev/tmp/firmware-update/tz.img of=/dev/block/bootdevice/by-name/tz_b bs=4k
+dd if=/dev/tmp/firmware-update/tz.img of=/dev/block/bootdevice/by-name/tz_a bs=4k
+dd if=/dev/tmp/firmware-update/tz.img of=/dev/block/bootdevice/by-name/tz_b bs=4k
+ui_print "Updating uefi..."
+dd if=/dev/tmp/firmware-update/uefi.img of=/dev/block/bootdevice/by-name/uefi_a bs=4k
+dd if=/dev/tmp/firmware-update/uefi.img of=/dev/block/bootdevice/by-name/uefi_b bs=4k
 ui_print "Updating uefisecapp..."
-#dd if=/dev/tmp/firmware-update/uefisecapp.img of=/dev/block/bootdevice/by-name/uefisecapp_a bs=4k
-#dd if=/dev/tmp/firmware-update/uefisecapp.img of=/dev/block/bootdevice/by-name/uefisecapp_b bs=4k
-if [ "$ddr4" = "true" ]; then
-   ui_print "Updating xbl for DDR4 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl.img of=/dev/block/bootdevice/by-name/xbl_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl.img of=/dev/block/bootdevice/by-name/xbl_b bs=4k
-   ui_print "Updating xbl_config for DDR4 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl_config.img of=/dev/block/bootdevice/by-name/xbl_config_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl_config.img of=/dev/block/bootdevice/by-name/xbl_config_b bs=4k 
-elif  [ "$ddr5" = "true" ]; then
-   ui_print "Updating xbl for DDR5 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl_lp5.img of=/dev/block/bootdevice/by-name/xbl_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl_lp5.img of=/dev/block/bootdevice/by-name/xbl_b bs=4k
-   ui_print "Updating xbl_config for DDR5 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl_config_lp5.img of=/dev/block/bootdevice/by-name/xbl_config_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl_config_lp5.img of=/dev/block/bootdevice/by-name/xbl_config_b bs=4k
-fi
+dd if=/dev/tmp/firmware-update/uefisecapp.img of=/dev/block/bootdevice/by-name/uefisecapp_a bs=4k
+dd if=/dev/tmp/firmware-update/uefisecapp.img of=/dev/block/bootdevice/by-name/uefisecapp_b bs=4k
+ui_print "Updating xbl..."
+dd if=/dev/tmp/firmware-update/xbl.img of=/dev/block/bootdevice/by-name/xbl_a bs=4k
+dd if=/dev/tmp/firmware-update/xbl.img of=/dev/block/bootdevice/by-name/xbl_b bs=4k
+ui_print "Updating xbl_config..."
+dd if=/dev/tmp/firmware-update/xbl_config.img of=/dev/block/bootdevice/by-name/xbl_config_a bs=4k
+dd if=/dev/tmp/firmware-update/xbl_config.img of=/dev/block/bootdevice/by-name/xbl_config_b bs=4k 
+ui_print "Updating xbl_ramdump..."
+dd if=/dev/tmp/firmware-update/xbl_ramdump.img of=/dev/block/bootdevice/by-name/xbl_ramdump_a bs=4k
+dd if=/dev/tmp/firmware-update/xbl_ramdump.img of=/dev/block/bootdevice/by-name/xbl_ramdump_b bs=4k 
 rm -rf /dev/tmp
 ui_print " "
 ui_print "Firmware flashing completed!"
