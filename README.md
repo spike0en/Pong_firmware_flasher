@@ -23,7 +23,7 @@ A Firmware Flasher for Pong that automatically detects device info and flashes t
 - EEA
 
 # Download
-- Firmware download: [Link](https://drive.google.com/drive/folders/1F-LD3pjx7mrjzpEYGvoeZ81s1ZUxXvQz?usp=sharing)) (Use Standard download on Mega not download as ZIP, because then you get a ZIP file inside the ZIP file!)
+- Firmware download: [Link](https://drive.google.com/drive/folders/1F-LD3pjx7mrjzpEYGvoeZ81s1ZUxXvQz?usp=sharing) (Use Standard download on Mega not download as ZIP, because then you get a ZIP file inside the ZIP file!)
 - Alternatively users can fetch the firmware images from [here](https://github.com/spike0en/Pong_Archive) and repack them along with script in a supported flashable template
 
 # Credits
