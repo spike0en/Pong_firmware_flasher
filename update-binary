@@ -40,39 +40,6 @@ mkdir -p $tmp
 unzip -o "$ZIPFILE" -d $tmp || abort "Failed to extract zip!"
 sleep 1
 
-# Device check
-supported=false
-ui_print "Checking device compatibility..."
-for i in 19805 20809; do
- for prop in "ro.boot.prjname" "ro.boot.project_name"; do
-    if [ "$(getprop $prop)" == "$i" ]; then
-      ui_print "- Supported Device detected"
-      supported=true
-      break 2
-    fi
-  done
-done
-$supported || abort "- Unsupported device! Aborting!"
-
-ddr4=false
-ddr5=false
-ui_print "Checking RAM type..."
-if [ "$(cat /proc/devinfo/ddr_type | grep -i DDR4)" ]; then
-  ddr4=true
-  ui_print "- DDR4 RAM detected!"
-elif [ "$(cat /proc/devinfo/ddr_type | grep -i DDR5)" ]; then
-  ddr5=true
-  ui_print "- DDR5 RAM detected!"
-elif [ "$(getprop ro.boot.ddr_type | grep -i 0)" ]; then
-  ddr4=true
-  ui_print "- DDR4 RAM detected!"
-elif [ "$(getprop ro.boot.ddr_type | grep -i 1)" ]; then
-  ddr5=true
-  ui_print "- DDR5 RAM detected!"
-else  ui_print "- Could not detect RAM type. Flashing aborted!" 
-  exit 0
-fi
-
 ui_print " "
 ui_print "**********************************************"
 ui_print "Device: Nothing Phone 2 (Pong)"
@@ -146,21 +113,7 @@ ui_print "Updating tz..."
 ui_print "Updating uefisecapp..."
 #dd if=/dev/tmp/firmware-update/uefisecapp.img of=/dev/block/bootdevice/by-name/uefisecapp_a bs=4k
 #dd if=/dev/tmp/firmware-update/uefisecapp.img of=/dev/block/bootdevice/by-name/uefisecapp_b bs=4k
-if [ "$ddr4" = "true" ]; then
-   ui_print "Updating xbl for DDR4 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl.img of=/dev/block/bootdevice/by-name/xbl_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl.img of=/dev/block/bootdevice/by-name/xbl_b bs=4k
-   ui_print "Updating xbl_config for DDR4 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl_config.img of=/dev/block/bootdevice/by-name/xbl_config_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl_config.img of=/dev/block/bootdevice/by-name/xbl_config_b bs=4k 
-elif  [ "$ddr5" = "true" ]; then
-   ui_print "Updating xbl for DDR5 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl_lp5.img of=/dev/block/bootdevice/by-name/xbl_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl_lp5.img of=/dev/block/bootdevice/by-name/xbl_b bs=4k
-   ui_print "Updating xbl_config for DDR5 RAM..."
-   #dd if=/dev/tmp/firmware-update/xbl_config_lp5.img of=/dev/block/bootdevice/by-name/xbl_config_a bs=4k
-   #dd if=/dev/tmp/firmware-update/xbl_config_lp5.img of=/dev/block/bootdevice/by-name/xbl_config_b bs=4k
-fi
+
 rm -rf /dev/tmp
 ui_print " "
 ui_print "Firmware flashing completed!"
